@@ -81,3 +81,14 @@ Next we need to display `chosenFolderData` as a grid.
 ```
 
 The `with` binding creates a binding context that will be used when binding any elements inside it. In this example, everything inside the `<table>` will be bound to `chosenFolderData`, so it's not necessary to use `chosenFolderData`. as a prefix before `mails`.
+
+In order to make Inbox the default, we need to add one more line of code to the **JavaScript** file.
+
+```JavaScript
+function WebmailViewModel() {
+    // ... leave everything else unchanged ...
+
+    // Show inbox by default
+    self.goToFolder('Inbox');
+};
+```
