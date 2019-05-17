@@ -92,3 +92,32 @@ function WebmailViewModel() {
     self.goToFolder('Inbox');
 };
 ```
+
+
+#### Viewing Individual Emails
+
+First we need to define another view model:
+
+**JavaScript**
+```JavaScript
+function WebmailViewModel() {
+    // Data
+    var self = this;
+    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    self.chosenFolderId = ko.observable();
+    self.chosenFolderData = ko.observable();
+    // New addtion
+    self.chosenMailData = ko.observable();
+
+    // ... leave everything else unchanged ...
+}
+```
+
+Next you need to update your bindings, so that if the visitor clicks on a row in the mails grid, your viewmodel loads the corresponding mail. First use the click binding on the `<tr>` elements:
+
+**HTML**
+```html
+<tbody data-bind="foreach: mails">
+    <tr data-bind="click: $root.goToMail">
+    <!-- ... rest as before ... -->
+```
