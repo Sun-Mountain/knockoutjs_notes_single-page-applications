@@ -121,3 +121,20 @@ Next you need to update your bindings, so that if the visitor clicks on a row in
     <tr data-bind="click: $root.goToMail">
     <!-- ... rest as before ... -->
 ```
+
+Next, implement `goToMail` on `WebmailViewModel`, causing it to update `chosenMailData` and `chosenFolderData` by means of an Ajax request:
+
+**JavaScript**
+```JavaScript
+// Behaviours    
+self.goToFolder = function(folder) { 
+    self.chosenFolderId(folder);
+    self.chosenMailData(null); // Stop showing a mail
+    $.get("/mail", { folder: folder }, self.chosenFolderData);        
+};
+self.goToMail = function(mail) { 
+    self.chosenFolderId(mail.folder);
+    self.chosenFolderData(null); // Stop showing a folder
+    $.get("/mail", { mailId: mail.id }, self.chosenMailData);
+};
+```
