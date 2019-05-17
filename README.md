@@ -48,3 +48,12 @@ function WebmailViewModel() {
 
 **Reminder**: An **observable** is a property that automatically will issue notifications whenever their value changes.
 
+Next, whenever the user navigates to a folder, populate `chosenFolderData` by performing an Ajax request:
+
+```JavaScript
+self.goToFolder = function(folder) { 
+    self.chosenFolderId(folder);
+    // This tells where the ajax request to 
+    $.get('/mail', { folder: folder }, self.chosenFolderData);
+};
+```
