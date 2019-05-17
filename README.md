@@ -9,6 +9,7 @@ But first a quick defination:
 
 In your JS file, you have a simple view model with some folders:
 
+**JavaScript**
 ```JavaScript
 function WebmailViewModel() {
     // Data
@@ -21,6 +22,7 @@ ko.applyBindings(new WebmailViewModel());
 
 Let's use `foreach` to display the folders in a list.
 
+**HTML**
 ```HTML
 <ul data-bind="foreach: folders">
     <li data-bind="text: $data"></li>
@@ -34,6 +36,7 @@ Style as needed.
 
 Because this is MVVM, we'll represent navigation position using viewmodel properties. That will make hash-based navigation very easy later. Add a  `chosenFolderId` property to your viewmodel class, and a function called  `goToFolder`:
 
+**JavaScript**
 ```JavaScript
 function WebmailViewModel() {
     // Data
@@ -50,6 +53,7 @@ function WebmailViewModel() {
 
 Next, whenever the user navigates to a folder, populate `chosenFolderData` by performing an Ajax request:
 
+**JavaScript**
 ```JavaScript
 self.goToFolder = function(folder) { 
     self.chosenFolderId(folder);
@@ -57,3 +61,23 @@ self.goToFolder = function(folder) {
     $.get('/mail', { folder: folder }, self.chosenFolderData);
 };
 ```
+
+Next we need to display `chosenFolderData` as a grid.
+
+**HTML**
+```html
+<!-- Mails grid -->
+<table class="mails" data-bind="with: chosenFolderData">
+    <thead><tr><th>From</th><th>To</th><th>Subject</th><th>Date</th></tr></thead>
+    <tbody data-bind="foreach: mails">
+        <tr>
+            <td data-bind="text: from"></td>
+            <td data-bind="text: to"></td>
+            <td data-bind="text: subject"></td>
+            <td data-bind="text: date"></td>
+        </tr> 
+    </tbody>
+</table>
+```
+
+The `with` binding creates a binding context that will be used when binding any elements inside it. In this example, everything inside the `<table>` will be bound to `chosenFolderData`, so it's not necessary to use `chosenFolderData`. as a prefix before `mails`.
