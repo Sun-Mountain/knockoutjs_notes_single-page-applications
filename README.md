@@ -28,3 +28,23 @@ Let's use `foreach` to display the folders in a list.
 ```
 
 Style as needed.
+
+
+#### Make folders selectable
+
+Because this is MVVM, we'll represent navigation position using viewmodel properties. That will make hash-based navigation very easy later. Add a  `chosenFolderId` property to your viewmodel class, and a function called  `goToFolder`:
+
+```JavaScript
+function WebmailViewModel() {
+    // Data
+    var self = this;
+    self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+    self.chosenFolderId = ko.observable();
+
+    // Behaviours
+    self.goToFolder = function(folder) { self.chosenFolderId(folder); };
+};
+```
+
+**Reminder**: An **observable** is a property that automatically will issue notifications whenever their value changes.
+
